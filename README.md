@@ -10,7 +10,7 @@ at the same time that it has been migrated over from OpenID to OpenID Connect.
 Versions
 --------
 
-For Play 2.2.x use version `0.0.5` (play2.2.x branch).
+For Play 2.2.x use version `0.0.8` (play2.2.x branch).
 
 For later Play versions see the master branch of this project.
 
