@@ -18,14 +18,14 @@ been removed and the `com.gu.googleauth.AuthenticatedRequest` has been replaced 
 Versions
 --------
 
-For Play 2.3.x use the master branch:
+For Play 2.3.x use the `play-2.3.x` branch:
 ```
-libraryDependencies += "com.gu" %% "play-googleauth" % "0.1.11"
+libraryDependencies += "com.gu" %% "play-googleauth" % "0.2.2"
 ```
 
-For Play 2.2.x use the `play2.2.x` branch:
+For Play 2.4.x use the `master` branch:
 ```
-libraryDependencies += "com.gu" %% "play-googleauth" % "0.0.8"
+libraryDependencies += "com.gu" %% "play-googleauth" % "0.3.3"
 ```
 
 Adding to your application
