@@ -25,16 +25,16 @@ class AppComponents(context: ApplicationLoader.Context)
     antiForgeryChecker = AntiForgeryChecker.borrowSettingsFromPlay(httpConfiguration)
   )
 
-  val googleCredentialLocation = configuration.get[String]("your.serviceAccountCert.path")
-  val googleCredential = GoogleCredential.fromStream(new FileInputStream(googleCredentialLocation))
-  val requiredGoogleGroups = configuration.underlying.getStringList("your.requiredGoogleGroups").asScala.toSet
-  val googleServiceAccount = GoogleServiceAccount(googleCredential.getServiceAccountId, googleCredential.getServiceAccountPrivateKey, "service.account@mydomain.com")
-  val googleGroupChecker = new GoogleGroupChecker(googleServiceAccount)
+//  val googleCredentialLocation = configuration.get[String]("your.serviceAccountCert.path")
+//  val googleCredential = GoogleCredential.fromStream(new FileInputStream(googleCredentialLocation))
+//  val requiredGoogleGroups = configuration.underlying.getStringList("your.requiredGoogleGroups").asScala.toSet
+//  val googleServiceAccount = GoogleServiceAccount(googleCredential.getServiceAccountId, googleCredential.getServiceAccountPrivateKey, "service.account@mydomain.com")
+//  val googleGroupChecker = new GoogleGroupChecker(googleServiceAccount)
 
   val authAction = new AuthAction[AnyContent](googleAuthConfig, routes.Login.loginAction(), controllerComponents.parsers.default)(executionContext)
 
-  val login = new Login(requiredGoogleGroups, googleAuthConfig, googleGroupChecker, wsClient, controllerComponents)(executionContext)
-  val appController = new Application(authAction, requiredGoogleGroups, googleAuthConfig, googleGroupChecker, controllerComponents)(executionContext)
+  val login = new Login(googleAuthConfig, wsClient, controllerComponents)(executionContext)
+  val appController = new Application(authAction, googleAuthConfig, controllerComponents)(executionContext)
 
   override def router: Router = new Routes(
     httpErrorHandler,

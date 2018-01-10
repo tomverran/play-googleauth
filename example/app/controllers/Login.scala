@@ -7,7 +7,7 @@ import play.api.mvc._
 import scala.concurrent.ExecutionContext
 
 
-class Login(requiredGoogleGroups: Set[String], val authConfig: GoogleAuthConfig, googleGroupChecker: GoogleGroupChecker,
+class Login(val authConfig: GoogleAuthConfig,
   override val wsClient: WSClient, val controllerComponents: ControllerComponents)
   (implicit executionContext: ExecutionContext)
   extends LoginSupport with BaseController {
@@ -33,8 +33,8 @@ class Login(requiredGoogleGroups: Set[String], val authConfig: GoogleAuthConfig,
    * (see `Application.scala`).
    */
   def oauth2Callback = Action.async { implicit request =>
-//     processOauth2Callback()  // without Google group membership checks
-    processOauth2Callback(requiredGoogleGroups, googleGroupChecker)  // with optional Google group checks
+    processOauth2Callback()  // without Google group membership checks
+    // processOauth2Callback(requiredGoogleGroups, googleGroupChecker)  // with optional Google group checks
   }
 
   def logout = Action { implicit request =>
