@@ -69,12 +69,15 @@ class AuthAction[A](val authConfig: GoogleAuthConfig, loginTarget: Call, bodyPar
     with ActionRefiner[Request, AuthAction.UserIdentityRequest]
     with UserIdentifier {
 
-  override protected def refine[A](request: Request[A]): Future[Either[Result, AuthAction.UserIdentityRequest[A]]] =
-    Future.successful(
-      userIdentity(request)
-        .map(userID => new AuthenticatedRequest(userID, request))
-        .toRight(sendForAuth(request)(executionContext))
-    )
+  override protected def refine[A](request: Request[A]): Future[Either[Result, AuthAction.UserIdentityRequest[A]]] = {
+    authConfig.antiForgeryChecker.ensureUserHasSessionId { _ =>
+      Future.successful(
+        userIdentity(request)
+          .map(userID => new AuthenticatedRequest(userID, request))
+          .toRight(sendForAuth(request)(executionContext))
+      )
+    }
+  }
 
   /**
     * Helper method that deals with sending a client for authentication. Typically this should store the target URL and

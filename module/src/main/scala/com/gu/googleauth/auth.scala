@@ -104,6 +104,18 @@ case class AntiForgeryChecker(
     t(sessionId).map(_.addingToSession(sessionIdKeyName -> sessionId))
   }
 
+  def ensureUserHasSessionId(result: Result)(implicit request: RequestHeader):Result = {
+    val currentSessionIdOpt = request.session.get(sessionIdKeyName)
+
+    currentSessionIdOpt match {
+      case Some(currentSessionId) => result
+      case None =>
+        val newSessionId = generateSessionId()
+        result.addingToSession(sessionIdKeyName -> newSessionId)
+    }
+  }
+
+
   def generateToken(sessionId: String)(implicit clock: Clock = Clock.systemUTC) : String = {
     Jwts.builder()
       .setExpiration(Date.from(clock.instant().plusSeconds(60)))
