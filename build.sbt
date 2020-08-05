@@ -5,7 +5,7 @@ name := "play-googleauth"
 
 val bintrayReleaseSettings = Seq(
 
-  organization := "com.ovoenergy",
+  organization := "com.ovoenergy.play-googleauth",
   description := "Simple Google authentication module for Play 2 (Temporary OVO fork)",
 
   bintrayRepository := "maven",
