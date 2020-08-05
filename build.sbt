@@ -1,18 +1,14 @@
 import ReleaseTransformations._
 import Dependencies._
 
-name               := "play-googleauth"
+name := "play-googleauth"
 
-val sonatypeReleaseSettings = Seq(
-  sonatypeProfileName := "com.gu",
+val bintrayReleaseSettings = Seq(
 
-  organization := "com.gu.play-googleauth",
-
-  description        := "Simple Google authentication module for Play 2",
+  organization := "com.ovoenergy",
+  description := "Simple Google authentication module for Play 2 (Temporary OVO fork)",
 
   licenses := Seq("Apache V2" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
-
-  publishTo := sonatypePublishToBundle.value,
 
   pomExtra := {
     <url>https://github.com/guardian/play-googleauth</url>
@@ -39,9 +35,7 @@ val sonatypeReleaseSettings = Seq(
     setReleaseVersion,
     commitReleaseVersion,
     tagRelease,
-    // For non cross-build projects, use releaseStepCommand("publishSigned")
-    releaseStepCommandAndRemaining("+publishSigned"),
-    releaseStepCommand("sonatypeBundleRelease"),
+    publishArtifacts,
     setNextVersion,
     commitNextVersion,
     pushChanges
@@ -61,7 +55,7 @@ def projectWithPlayVersion(majorMinorVersion: String) =
       "org.scalatest" %% "scalatest" % "3.0.8" % "test"
     ) ++ googleDirectoryAPI ++ playLibs(majorMinorVersion),
 
-    sonatypeReleaseSettings
+    bintrayReleaseSettings
   )
 
 lazy val `play-v26` = projectWithPlayVersion("26")
@@ -74,5 +68,5 @@ lazy val `play-googleauth-root` = (project in file(".")).aggregate(
   publishArtifact := false,
   skip in publish := true,
 
-  sonatypeReleaseSettings
+  bintrayReleaseSettings
 )
