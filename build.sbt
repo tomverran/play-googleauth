@@ -8,7 +8,9 @@ val bintrayReleaseSettings = Seq(
   organization := "com.ovoenergy",
   description := "Simple Google authentication module for Play 2 (Temporary OVO fork)",
 
-  licenses := Seq("Apache V2" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
+  bintrayRepository := "maven",
+  bintrayOrganization := Some("ovotech"),
+  licenses := Seq("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
 
   pomExtra := {
     <url>https://github.com/guardian/play-googleauth</url>
